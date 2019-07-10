@@ -10,7 +10,9 @@ from .domain import Domain
 from .exception import UpdateError, AddError, DnsRecordBaseException
 from .domain_parser import DomainParser
 from .record_parser import RecordParser
+import urllib3
 
+urllib3.disable_warnings()
 
 default_user_agent = "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko"
 
@@ -19,7 +21,7 @@ class Freenom(object):
     def __init__(self, user_agent=default_user_agent, *args, **kwargs):
         self.session = requests.Session()
         self.session.headers.update({'User-Agent': user_agent})
-        self.session.verify = self.findcert() or False
+        self.session.verify = False
 
     @staticmethod
     def findcert():
